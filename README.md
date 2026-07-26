@@ -1,6 +1,6 @@
 # German tax system, visualised
 
-**https://tax-de.wbg.gg**
+**https://finances-de.wbg.gg**
 
 An interactive look at how fast the German tax and contribution burden grows with
 income — wage tax 2024 plus employee social contributions.
