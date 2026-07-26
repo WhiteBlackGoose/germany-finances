@@ -2,12 +2,12 @@
 
 **https://tax-de.wbg.gg**
 
-An interactive look at how fast the German tax burden grows with income
-(income tax 2024 per §32a EStG, optionally including employee social contributions).
+An interactive look at how fast the German tax and contribution burden grows with
+income — wage tax 2024 plus employee social contributions.
 
 ## How to read the chart
 
-The vertical axis is income. The horizontal axis is how one euro splits up:
+The vertical axis is gross salary. The horizontal axis is how one euro splits up:
 
 - the **width** of a band is the marginal burden on the *next* euro earned
 - the **area** of a band up to the slider is the amount actually paid
@@ -15,23 +15,40 @@ The vertical axis is income. The horizontal axis is how one euro splits up:
 So the tax curve is a fixed backdrop, and the slider projects your income onto it.
 Everything below the slider line is paid; above it is a faint preview of what comes next.
 
-`Net | Social contributions | Tax` — left to right.
+`Net | Social contributions | Tax | Church tax` — left to right.
 
-## Details
+The two dashed teal lines are the contribution ceilings. Crossing them makes the
+marginal burden *drop*, which is the most counter-intuitive feature of the system.
 
-- Income tax follows the 2024 tariff formula (§32a EStG): basic allowance 11,604 €,
-  two progressive zones, 42 % from 66,760 € and 45 % from 277,825 €.
-- With social contributions enabled, the value is a **gross salary** and the figures use
-  the 2024 employee rates: pension 9.3 %, unemployment 1.3 %, health 8.15 %
-  (incl. half of the average supplementary rate), long-term care 2.3 % (no children).
-  Contribution ceilings: 62,100 € (health/care) and 90,600 € (pension/unemployment, West).
-- Pension, health and care contributions reduce the taxable base as
-  *Vorsorgeaufwendungen* (simplified *Vorsorgepauschale*). Unemployment insurance does not.
-- Without social contributions, the value on the slider is the **taxable income** (zvE) directly.
+## What you can set
 
-Not included: church tax, solidarity surcharge, *Werbungskosten*, other deductions,
-splitting for married couples, Saxony's differing care-insurance split.
-This is a teaching tool, not a tax return.
+- **Tax class I–VI.** III applies the splitting tariff, II adds the single-parent
+  allowance, VI drops the employee and special-expenses allowances, and V/VI use the
+  separate formula of §39b (2) sentence 7 EStG instead of the bracket tariff.
+- **Region.** West/East changes the pension and unemployment ceiling
+  (90,600 € / 89,400 €); Saxony additionally shifts the care-insurance split to the
+  employee (2.2 % instead of 1.7 %).
+- **Church tax** — 8 % (Bavaria, Baden-Württemberg) or 9 % of the wage tax.
+- **Health insurance surcharge** — the fund-specific rate, 1.7 % on average in 2024.
+- **No children** — adds the 0.6 % care-insurance surcharge, paid by the employee alone.
+
+## Accuracy
+
+Tax figures follow the BMF Programmablaufplan 2024 and were checked against its
+official Prüftabelle for all six tax classes: agreement within ~15 €. The remaining
+gap is the statutory rounding of the taxable amount down to a multiple of 36 €
+(§39b (2) sentence 6), which is deliberately not reproduced — a step function would
+destroy the marginal-rate curve that the whole chart is built on.
+
+Contributions to pension, health and care insurance reduce the tax base via the
+*Vorsorgepauschale*; unemployment insurance does not. Health insurance counts at the
+reduced rate (7.0 % + half the surcharge) for that deduction, while 7.3 % + half the
+surcharge is actually paid.
+
+Not included: solidarity surcharge, private health insurance, real *Werbungskosten*
+beyond the standard allowance, child allowances, and the retroactive 2024 increase of
+the basic allowance to 11,784 € (the original 11,604 € tariff is used throughout).
+This is a teaching tool, not a payroll run.
 
 ## Development
 
