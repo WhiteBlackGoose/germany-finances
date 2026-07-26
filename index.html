@@ -149,6 +149,22 @@ nav.tabs button[data-view="benefits"].active { color: var(--teal); }
 .readhint svg { display: block; }
 .readhint b { color: var(--text); font-weight: 600; }
 
+footer {
+  font-size: 0.68rem;
+  color: #6b7280;
+  text-align: center;
+  line-height: 1.7;
+  padding-bottom: 4px;
+}
+
+footer a {
+  color: var(--muted);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+}
+
+footer a:hover { color: var(--text); border-bottom-color: var(--muted); }
+
 .controls {
   display: flex;
   align-items: center;
@@ -522,6 +538,8 @@ nav.tabs button[data-view="benefits"].active { color: var(--teal); }
 
 </div>
 
+<footer id="footer"></footer>
+
 <script>
 // ═══ Sprachen ═══════════════════════════════════════════
 const STRINGS = {
@@ -541,6 +559,9 @@ const STRINGS = {
     buergergeld: 'Bürgergeld', wohngeld: 'Wohngeld', kindergeld: 'Kindergeld',
     available: 'Verfügbar', perMonth: '€/Monat',
     benefitsCaption: 'Waagerecht = verfügbares Einkommen',
+    footer: 'Gemeinfrei (CC0 1.0) — nutz es, wie du willst. Ohne Gewähr, kein Ersatz '
+      + 'für eine Steuer- oder Sozialberatung.',
+    sourceCode: 'Quellcode auf GitHub',
     hintTax: 'Hier zählt die <b>Fläche</b>: die Breite ist die Belastung des nächsten Euro, '
       + 'die Fläche darunter der Betrag, den man zahlt.',
     hintBenefits: 'Hier zählt die <b>Länge</b>: die Strecke auf der Sliderlinie ist das '
@@ -585,6 +606,9 @@ const STRINGS = {
     buergergeld: 'Citizen’s benefit', wohngeld: 'Housing benefit', kindergeld: 'Child benefit',
     available: 'Available', perMonth: '€/month',
     benefitsCaption: 'Horizontal = disposable income',
+    footer: 'Public domain (CC0 1.0) — do what you like with it. No warranty, and no '
+      + 'substitute for actual tax or benefits advice.',
+    sourceCode: 'Source on GitHub',
     hintTax: 'Read the <b>area</b>: the width is the burden on your next euro, '
       + 'the area below it is what you actually pay.',
     hintBenefits: 'Read the <b>length</b>: the bar on the slider line is your disposable '
@@ -620,6 +644,8 @@ let lang = (localStorage.getItem('taxLang')
   || (navigator.language || 'de').slice(0, 2).toLowerCase()) === 'de' ? 'de' : 'en';
 const t = k => STRINGS[lang][k];
 const ROMAN = ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII'];
+const REPO_URL    = 'https://github.com/WhiteBlackGoose/germany-finances';
+const LICENSE_URL = 'https://creativecommons.org/publicdomain/zero/1.0/';
 
 // ═══ Einkommensteuertarif 2024 (§32a EStG) ══════════════
 // Stetige Fassung (ohne die gesetzliche Abrundung), damit Fläche und
@@ -1625,6 +1651,10 @@ function applyLang() {
       + '<path d="M17 1 h7 v12 h-7 z" fill="#a855f7"/></svg>';
   document.getElementById('hintGlyph').innerHTML = glyph;
   document.getElementById('hintText').innerHTML = t(benefits ? 'hintBenefits' : 'hintTax');
+
+  document.getElementById('footer').innerHTML =
+    `<a href="${REPO_URL}" target="_blank" rel="noopener">${t('sourceCode')}</a>`
+    + ` · <a href="${LICENSE_URL}" target="_blank" rel="noopener">CC0 1.0</a><br>${t('footer')}`;
 
   document.getElementById('btnMonth').textContent = t('month');
   document.getElementById('btnYear').textContent  = t('year');

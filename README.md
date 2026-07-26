@@ -73,6 +73,13 @@ climate component in the housing benefit, and children are costed at the 6–13 
 
 This is a teaching tool, not a payroll run.
 
+## Licence
+
+[CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/) — dedicated to
+the public domain. Copy it, change it, publish it, sell it, no attribution required.
+
+No warranty of any kind, and nothing here is tax or benefits advice.
+
 ## Development
 
 A single self-contained `index.html` — no build step, no dependencies.
