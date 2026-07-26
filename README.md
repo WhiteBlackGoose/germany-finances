@@ -37,3 +37,14 @@ This is a teaching tool, not a tax return.
 
 A single self-contained `index.html` — no build step, no dependencies.
 Open it in a browser. Pushes to `main` deploy to GitHub Pages via Actions.
+
+### One-time Pages setup
+
+The workflow cannot enable Pages by itself — the default `GITHUB_TOKEN` lacks the
+admin scope for that. In **Settings → Pages**, set:
+
+1. **Source** → *GitHub Actions*
+2. **Custom domain** → `tax-de.wbg.gg`, then tick *Enforce HTTPS*
+
+DNS is already in place: `tax-de.wbg.gg` is a CNAME to `whiteblackgoose.github.io`.
+After step 1, re-run the latest workflow and it deploys.

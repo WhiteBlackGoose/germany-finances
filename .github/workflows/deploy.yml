@@ -23,10 +23,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # enablement schaltet Pages beim ersten Lauf selbst auf "GitHub Actions" um
+      # Setzt voraus, dass Pages im Repo einmalig auf "GitHub Actions" gestellt wurde
+      # (Settings → Pages → Source). Der Standard-GITHUB_TOKEN darf das nicht selbst tun.
       - uses: actions/configure-pages@v5
-        with:
-          enablement: true
 
       - name: Upload site
         uses: actions/upload-pages-artifact@v3
