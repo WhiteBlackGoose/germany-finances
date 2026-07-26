@@ -1,11 +1,12 @@
-# German tax system, visualised
+# Germany: taxes and benefits, visualised
 
 **https://finances-de.wbg.gg**
 
-An interactive look at how fast the German tax and contribution burden grows with
-income — wage tax 2024 plus employee social contributions.
+An interactive look at what the German state takes from you and what it gives back —
+wage tax and social contributions 2024, plus citizen's benefit, housing benefit and
+child benefit. Two views, one slider, switchable between monthly and yearly figures.
 
-## How to read the chart
+## What you pay — read the *area*
 
 The vertical axis is gross salary. The horizontal axis is how one euro splits up:
 
@@ -19,6 +20,22 @@ Everything below the slider line is paid; above it is a faint preview of what co
 
 The two dashed teal lines are the contribution ceilings. Crossing them makes the
 marginal burden *drop*, which is the most counter-intuitive feature of the system.
+
+## What you receive — read the *length*
+
+Same vertical axis, but horizontally an amount rather than a share: citizen's benefit,
+housing benefit, child benefit and net pay stacked into the disposable income. The
+slider line itself is split into those four pieces, so you can read the composition at
+any income directly off it.
+
+- **Citizen's benefit** — standard needs plus housing, with income credited under the
+  §11b SGB II allowance steps (100 € / 20 % / 30 % / 10 %)
+- **Housing benefit** — the §19 WoGG formula with the a/b/c parameters of Anlage 2 and
+  the rent ceilings of Anlage 1 by rent level I–VII
+- **Child benefit** — 250 € per child
+
+Citizen's benefit takes precedence, so housing benefit only starts where the former
+ends; the green line marks that threshold.
 
 ## What you can set
 
@@ -46,8 +63,14 @@ reduced rate (7.0 % + half the surcharge) for that deduction, while 7.3 % + half
 surcharge is actually paid.
 
 Not included: solidarity surcharge, private health insurance, real *Werbungskosten*
-beyond the standard allowance, child allowances, and the retroactive 2024 increase of
-the basic allowance to 11,784 € (the original 11,604 € tariff is used throughout).
+beyond the standard allowance, child tax allowances, and the retroactive 2024 increase
+of the basic allowance to 11,784 € (the original 11,604 € tariff is used throughout).
+
+On the benefits side the model is coarser: no minijob or transition-zone relief on
+social contributions (so net pay is understated below ~2,000 €/month, exactly where
+benefits matter), no child supplement, no single-parent extra needs, no heating or
+climate component in the housing benefit, and children are costed at the 6–13 age band.
+
 This is a teaching tool, not a payroll run.
 
 ## Development
