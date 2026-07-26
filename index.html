@@ -435,18 +435,24 @@ const Z2_END = 17005;
 const Z3_END = 66760;
 const Z4_END = 277825;
 
+// Die Konstanten der oberen Zonen sind im Gesetz auf zwei Nachkommastellen
+// gerundet (1025,38 / −10602,13 / −18936,88), wodurch der Tarif an den
+// Zonengrenzen um wenige Cent springt. Bei der gesetzlichen Abrundung auf volle
+// Euro fällt das nicht auf, eine numerische Ableitung macht daraus aber einen
+// Ausschlag von mehreren Prozentpunkten. Daher hier aus der Stetigkeitsbedingung
+// hergeleitet — die Steuer weicht dadurch um höchstens 5 Cent ab.
+const zone2 = zvE => { const y = (zvE - GFB) / 10000; return (922.98 * y + 1400) * y; };
+const C2 = zone2(Z2_END);                                    // ≈ 1025,3807
+const zone3 = zvE => { const z = (zvE - Z2_END) / 10000; return (181.19 * z + 2397) * z + C2; };
+const C3 = zone3(Z3_END) - 0.42 * Z3_END;                    // ≈ −10602,08
+const C4 = (0.42 * Z4_END + C3) - 0.45 * Z4_END;             // ≈ −18936,83
+
 function tarif(zvE) {
-  if (zvE <= GFB) return 0;
-  if (zvE <= Z2_END) {
-    const y = (zvE - GFB) / 10000;
-    return (922.98 * y + 1400) * y;
-  }
-  if (zvE <= Z3_END) {
-    const z = (zvE - Z2_END) / 10000;
-    return (181.19 * z + 2397) * z + 1025.38;
-  }
-  if (zvE <= Z4_END) return 0.42 * zvE - 10602.13;
-  return 0.45 * zvE - 18936.88;
+  if (zvE <= GFB)    return 0;
+  if (zvE <= Z2_END) return zone2(zvE);
+  if (zvE <= Z3_END) return zone3(zvE);
+  if (zvE <= Z4_END) return 0.42 * zvE + C3;
+  return 0.45 * zvE + C4;
 }
 
 const ZONES = [
@@ -627,13 +633,16 @@ function breakpoints() {
   const zvEEdges = stkl >= 5
     ? [W1, W2, W3, GFB / 1.25, GFB / 0.75, Z2_END / 1.25, Z2_END / 0.75, Z3_END / 1.25]
     : [GFB * k, Z2_END * k, Z3_END * k, Z4_END * k];
+  // Der Abstand muss größer sein als das Fenster von slope(), sonst wird an
+  // jedem Knick ein gemittelter Zwischenwert gezeichnet statt der scharfen Kante.
+  const eps = 0.6;
   const bp = [];
   for (const e of zvEEdges) {
     const g = grossAtZvE(e);
-    bp.push(g - 0.01, g + 0.01);
+    bp.push(g - eps, g + eps);
   }
   const vhb = stkl === 3 ? 3000 : 1900;
-  bp.push(BBG_KVPV, BBG_KVPV + 0.01, bbgRV(), bbgRV() + 0.01);
+  bp.push(BBG_KVPV - eps, BBG_KVPV + eps, bbgRV() - eps, bbgRV() + eps);
   bp.push(vhb / 0.12, vhb / (kvDed() + pvBase()));    // Mindestvorsorgepauschale
   return bp;
 }
